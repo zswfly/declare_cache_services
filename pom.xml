@@ -110,6 +110,7 @@
 					<fork>true</fork><!-- fork:如果没有该配置，这个devtools不会起作用，即应用不会restart -->
 				</configuration>
 			</plugin>
+
 		</plugins>
 		<resources>
 			<resource>
@@ -119,8 +120,8 @@
 				<directory>src/main/webapps</directory>
 			</resource>
 		</resources>
-
-
 	</build>
+
+
 
 </project>
