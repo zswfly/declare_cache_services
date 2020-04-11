@@ -1,1 +1,1 @@
-# declare_redis_services
+# declare_cache_services

@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: redis-services
+    name: cache-services
  # thymeleaf:
  #   cache: false
  #   mode: LEGACYHTML5

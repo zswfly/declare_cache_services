@@ -15,9 +15,9 @@
             <relativePath/>
         </parent>
 	<groupId>com.zsw</groupId>
-	<artifactId>redis_services</artifactId>
+	<artifactId>cache_services</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>redis_services</name>
+	<name>cache_services</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -107,7 +107,7 @@
 	<!--</plugins>-->
 	<!--</build>-->
 	<build>
-		<finalName>redis-services</finalName>
+		<finalName>cache-services</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

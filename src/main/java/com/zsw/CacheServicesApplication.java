@@ -8,10 +8,10 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @SpringBootApplication(scanBasePackages = "com.zsw.**")
 @EnableEurekaClient
 @EnableDiscoveryClient
-public class RedisServicesApplication {
+public class CacheServicesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RedisServicesApplication.class, args);
+		SpringApplication.run(CacheServicesApplication.class, args);
 	}
 
 }
