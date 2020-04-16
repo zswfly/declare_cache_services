@@ -4,15 +4,6 @@ server:
 spring:
   application:
     name: cache-services
- # thymeleaf:
- #   cache: false
- #   mode: LEGACYHTML5
- #   prefix: classpath:/views/
- #   suffix: .html
- #   encoding: UTF-8
- #   content-type: text/html
-  mvc:
- #   static-path-pattern: /**
   devtools:
     restart:
       enabled: true
@@ -21,7 +12,12 @@ spring:
       #host: 'my_redis'
       host: 'localhost'
       port: 6379
-
+#      lettuce:
+#        pool:
+#          max-wait: 100000
+#          max-idle: 10
+#          max-active: 100
+      timeout: 5000
 
 eureka:
   client:
