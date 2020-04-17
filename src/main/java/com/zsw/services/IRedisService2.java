@@ -10,5 +10,7 @@ import java.util.Set;
 public interface IRedisService2 {
 
      void opsForHashPut(String h,String hk,String hv) throws Exception;
-     void opsForSet(String key, Set value) throws Exception;
+     String opsForHashGet(String h,String hk) throws Exception;
+     void opsForSetAdd(String key, Set value) throws Exception;
+     Boolean opsForSetIsMember(String key, String value) throws Exception;
 }

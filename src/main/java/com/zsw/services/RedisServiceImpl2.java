@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -25,8 +24,20 @@ public class RedisServiceImpl2 implements IRedisService2{
     }
 
     @Override
-    public void opsForSet(String key, Set value) throws Exception {
+    public String opsForHashGet(String h,String hk) throws Exception {
+        HashOperations<String,String,String> hashOperations = this.redisTemplate.opsForHash();
+        return hashOperations.get(h,hk);
+    }
+
+    @Override
+    public void opsForSetAdd(String key, Set value) throws Exception {
         SetOperations setOperations = this.redisTemplate.opsForSet();
         setOperations.add(key,value);
+    }
+
+    @Override
+    public Boolean opsForSetIsMember(String key, String value) throws Exception {
+        SetOperations setOperations = this.redisTemplate.opsForSet();
+        return setOperations.isMember(key,value);
     }
 }
