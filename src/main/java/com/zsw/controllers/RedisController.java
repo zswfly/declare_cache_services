@@ -4,6 +4,7 @@ import com.zsw.entitys.user.UserPermission;
 import com.zsw.services.IRedisService2;
 import com.zsw.utils.CacheStaticURLUtil;
 import com.zsw.utils.RedisStaticString;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ public class RedisController {
     public Integer initPermission(@RequestBody Map<Integer,Set<String>> userPermissions) throws Exception {
         for(Map.Entry<Integer,Set<String>> entry : userPermissions.entrySet()){
             this.redisService2.opsForSetAdd(
-                    RedisStaticString.USERPERMISSION + ":" + entry.getKey(),
+                    RedisStaticString.USER_PERMISSION + ":" + entry.getKey(),
                     entry.getValue()
             );
         }
@@ -40,7 +41,7 @@ public class RedisController {
             method= RequestMethod.POST)
     @ResponseBody
     public Integer setToken(@RequestBody Map<String,String> tokenMap) throws Exception {
-        this.redisService2.opsForHashPut(RedisStaticString.USERTOKEN,tokenMap.get("userId"),tokenMap.get("token"));
+        this.redisService2.opsForHashPut(RedisStaticString.USER_TOKEN,tokenMap.get("userId"),tokenMap.get("token"));
         return 1;
     }
 
@@ -48,7 +49,7 @@ public class RedisController {
             method= RequestMethod.POST)
     @ResponseBody
     public String getToken(@RequestBody String userId) throws Exception {
-        return this.redisService2.opsForHashGet(RedisStaticString.USERTOKEN,userId);
+        return this.redisService2.opsForHashGet(RedisStaticString.USER_TOKEN,userId);
     }
 
     @RequestMapping(value=CacheStaticURLUtil.redisController_checkPermission,
@@ -56,8 +57,33 @@ public class RedisController {
     @ResponseBody
     public Boolean checkPermission(@RequestBody UserPermission userPermission) throws Exception {
         return this.redisService2.opsForSetIsMember(
-                RedisStaticString.USERPERMISSION + ":" + userPermission.getUserId(),
+                RedisStaticString.USER_PERMISSION + ":" + userPermission.getUserId(),
                 userPermission.getPermissionCode());
     }
+
+
+    @RequestMapping(value=CacheStaticURLUtil.redisController_setVerifyCode,
+            method= RequestMethod.POST)
+    @ResponseBody
+    public void setVerifyCode(@RequestBody Map<String,String> param ) throws Exception {
+        this.redisService2.opsForHashPut(
+                RedisStaticString.PHONE_VERIFYCODE + ":" + param.get("type")
+                ,param.get("phone")
+                ,param.get("verifyCode"));
+    }
+
+    @RequestMapping(value=CacheStaticURLUtil.redisController_checkVerifyCode,
+            method= RequestMethod.POST)
+    @ResponseBody
+    public Boolean checkVerifyCode(@RequestBody Map<String,String> param ) throws Exception {
+        return StringUtils.isNotBlank(param.get("verifyCode"))
+                && param.get("verifyCode").equals(
+                        this.redisService2.opsForHashGet(
+                                RedisStaticString.PHONE_VERIFYCODE + ":" + param.get("type")
+                                ,param.get("phone")
+                        )
+        );
+    }
+
 
 }
