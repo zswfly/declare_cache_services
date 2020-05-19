@@ -85,5 +85,28 @@ public class RedisController {
         );
     }
 
+    @RequestMapping(value=CacheStaticURLUtil.redisController_putUserToken,
+            method= RequestMethod.POST)
+    @ResponseBody
+    public void putUserToken(@RequestBody Map<String,String> param ) throws Exception {
+        this.redisService2.opsForHashPut(
+                RedisStaticString.USER_REMEMBERTOKEN
+                ,param.get("userId")
+                ,param.get("rememberToken"));
+    }
+
+
+    @RequestMapping(value=CacheStaticURLUtil.redisController_checkUserToken,
+            method= RequestMethod.POST)
+    @ResponseBody
+    public Boolean checkUserToken(@RequestBody Map<String,String> param ) throws Exception {
+        return StringUtils.isNotBlank(param.get("rememberToken"))
+                && param.get("rememberToken").equals(
+                this.redisService2.opsForHashGet(
+                        RedisStaticString.USER_REMEMBERTOKEN
+                        ,param.get("userId")
+                )
+        );
+    }
 
 }
