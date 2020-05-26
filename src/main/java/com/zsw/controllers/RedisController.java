@@ -1,10 +1,13 @@
 package com.zsw.controllers;
 
+import com.zsw.controller.BaseController;
 import com.zsw.entitys.user.UserPermission;
 import com.zsw.services.IRedisService2;
 import com.zsw.utils.CacheStaticURLUtil;
 import com.zsw.utils.RedisStaticString;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +23,13 @@ import java.util.Set;
  */
 @Controller
 @RequestMapping(CacheStaticURLUtil.redisController)
-public class RedisController {
+public class RedisController extends BaseController {
     @Autowired
     IRedisService2 redisService2;
+
+    private static final Logger LOG = LoggerFactory.getLogger(RedisController.class);
+
+
 
     @RequestMapping(value=CacheStaticURLUtil.redisController_initPermission,
             method= RequestMethod.POST)
@@ -109,4 +116,9 @@ public class RedisController {
         );
     }
 
+
+    @Override
+    public Logger getLOG(){
+        return this.LOG;
+    }
 }
